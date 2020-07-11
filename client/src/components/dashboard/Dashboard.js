@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/authActions';
+import ProjectsFeedingForm from './ProjectsFeedingForm';
 class Dashboard extends Component {
   onLogoutClick = (e) => {
     e.preventDefault();
@@ -20,6 +21,7 @@ class Dashboard extends Component {
                 <span style={{ fontFamily: 'monospace' }}>MY</span> app 👏
               </p>
             </h4>
+            <ProjectsFeedingForm />
             <button
               style={{
                 width: '150px',
