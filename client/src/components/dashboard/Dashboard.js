@@ -2,8 +2,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/authActions';
-import ProjectsFeedingForm from './ProjectsFeedingForm';
+//import * as React from 'react';
+
+import ImageUploading from 'react-images-uploading';
+
+const maxNumber = 10;
+const maxMbFileSize = 5 * 1024 * 1024; // 5Mb
+
 class Dashboard extends Component {
+  onChange = (imageList) => {
+    // data for submit
+    console.log(imageList);
+  };
   onLogoutClick = (e) => {
     e.preventDefault();
     this.props.logoutUser();
@@ -21,7 +31,30 @@ class Dashboard extends Component {
                 <span style={{ fontFamily: 'monospace' }}>MY</span> app 👏
               </p>
             </h4>
-            <ProjectsFeedingForm />
+            <ImageUploading
+              onChange={this.onChange}
+              maxNumber={maxNumber}
+              multiple
+              maxFileSize={maxMbFileSize}
+              acceptType={['jpg', 'gif', 'png']}
+            >
+              {({ imageList, onImageUpload, onImageRemoveAll }) => (
+                // write your building UI
+                <div>
+                  <button onClick={onImageUpload}>Upload images</button>
+                  <button onClick={onImageRemoveAll}>Remove all images</button>
+
+                  {imageList.map((image) => (
+                    <div key={image.key}>
+                      // eslint-disable-next-line
+                      <img src={image.dataURL} />
+                      <button onClick={image.onUpdate}>Update</button>
+                      <button onClick={image.onRemove}>Remove</button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </ImageUploading>
             <button
               style={{
                 width: '150px',
